@@ -1,5 +1,5 @@
 const { MongoClient, ServerApiVersion } = require('mongodb');
-
+require('dotenv').config()
 const express = require('express');
 const app = express();
 
@@ -12,14 +12,16 @@ const port = process.env.PORT || 2000;
 app.use(cors())
 app.use(express.json())
 
-//gamezone_shop325
-//dTRvA1OCxmqhNtAZ
+
+console.log(process.env.GAME_USER);
+console.log(process.env.GAME_PASS);
 
 app.get("/", (req, res) => {
     res.send("GameZone Toy Shop is running")
 })
 
-const uri = "mongodb+srv://gamezone_shop325:dTRvA1OCxmqhNtAZ@cluster0.yaanftr.mongodb.net/?retryWrites=true&w=majority";
+
+const uri = `mongodb+srv://${process.env.GAME_user}:${process.env.GAME_pass}@cluster0.yaanftr.mongodb.net/?retryWrites=true&w=majority`;
 
 // Create a MongoClient with a MongoClientOptions object to set the Stable API version
 const client = new MongoClient(uri, {
