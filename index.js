@@ -75,8 +75,11 @@ async function run() {
 
         //delete an single data from mongodb
 
-        app.delete("/toyshops/:id", async (req, res) => {
-            const id = req.params.id
+        app.delete("/mytoys/:id", async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await gamezoneCollection.deleteOne(query)
+            res.send(result)
 
         })
 
