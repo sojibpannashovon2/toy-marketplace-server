@@ -83,6 +83,42 @@ async function run() {
 
         })
 
+        //find a spechific  data from mongodb
+
+        app.get("/mytoys/:id", async (req, res) => {
+            const id = req.params.id;
+            const query = { _id: new ObjectId(id) }
+            const result = await gamezoneCollection.findOne(query)
+            res.send(result)
+
+        })
+        //Update a spechific  data from mongodb
+
+        app.put("/mytoys/:id", async (req, res) => {
+            const id = req.params.id;
+            const filter = { _id: new ObjectId(id) }
+            const options = { upsert: true };
+            const data = req.body;
+
+            const updateData = {
+                $set: {
+                    name: data.name,
+                    sellerName: data.sellerName,
+                    email: data.email,
+                    quantity: data.quantity,
+                    price: data.price,
+                    rate: data.rate,
+                    catagory: data.catagory,
+                    details: data.details,
+                    photo: data.photo
+                }
+            }
+
+            const result = await gamezoneCollection.updateOne(filter, updateData, options)
+            res.send(result)
+
+        })
+
         // Send a ping to confirm a successful connection
         await client.db("admin").command({ ping: 1 });
         console.log("Pinged your deployment. You successfully connected to MongoDB!");
