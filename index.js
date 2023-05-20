@@ -1,4 +1,4 @@
-const { MongoClient, ServerApiVersion } = require('mongodb');
+const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 require('dotenv').config()
 const express = require('express');
 const app = express();
@@ -49,6 +49,16 @@ async function run() {
             const cursor = gamezoneCollection.find();
             const result = await cursor.toArray();
             res.send(result)
+        })
+
+        //get a single data from mongodb
+
+        app.get("/toyshops/:id", async (req, res) => {
+            const Id = req.params.id;
+            const query = { _id: new ObjectId(Id) }
+            const result = await gamezoneCollection.findOne(query)
+            res.send(result)
+
         })
 
         // Send a ping to confirm a successful connection
