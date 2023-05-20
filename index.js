@@ -50,6 +50,17 @@ async function run() {
             const result = await cursor.toArray();
             res.send(result)
         })
+        // get specefic user data from mongodb
+        app.get('/mytoys', async (req, res) => {
+            // console.log(req.query.email);
+            let query2 = {};
+            if (req.query?.email) {
+                query2 = { email: req.query.email }
+            }
+
+            const result = await gamezoneCollection.find(query2).toArray();
+            res.send(result)
+        })
 
         //get a single data from mongodb
 
@@ -58,6 +69,14 @@ async function run() {
             const query = { _id: new ObjectId(Id) }
             const result = await gamezoneCollection.findOne(query)
             res.send(result)
+
+        })
+
+
+        //delete an single data from mongodb
+
+        app.delete("/toyshops/:id", async (req, res) => {
+            const id = req.params.id
 
         })
 
